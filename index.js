@@ -1,17 +1,41 @@
-var buildQuery = function(cmd, data) {
+var util = require('util');
+
+var buildQuery = function(cmd, options, args) {
   var command = cmd;
-  for(var key in data) {
-    var value = data[key];
-    if(value) {
-      command += ' ';
-      var isShortcut = key.length === 1;
-      command += isShortcut ? '-' : '--';
-      command += key;
-      // How to properly test for stirngs?
-      if(typeof value === 'string') {
-        command += isShortcut ? ' ' : '=';
-        command += value;
+
+  // Options
+  if(options) {
+    if(util.isArray(options)) {
+      options.forEach(function(option) {
+        command += ' --' + option;
+      });
+    } else {
+      for(var key in options) {
+        var value = options[key];
+        if(value) {
+          command += ' ';
+          var isShortcut = key.length === 1;
+          command += isShortcut ? '-' : '--';
+          command += key;
+          // How to properly test for stirngs?
+          // this should also allow nubers i think
+          if(util.isString(value) || util.Number(value)) {
+            command += isShortcut ? ' ' : '=';
+            command += value;
+          }
+        }
       }
+    }
+  }
+
+  // Arguments
+  if(args) {
+    if(util.isArray(args)) {
+      args.forEach(function(arg) {
+        command += ' ' + arg;
+      });
+    } else {
+      command += ' ' + args;
     }
   }
   return command;
