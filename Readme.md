@@ -5,6 +5,7 @@ This is not another command option parser. It's the opposite. A command option b
 ## Example
 
 ```javascript
-    var command = buildQuery('say', {interactive: true, v: 'Zarvos'});
+	var cmdliner = require('commandliner');
+    var command = cmdliner('say', {interactive: true, v: 'Zarvos'});
     // Evaluates to: say --interactive -v Zarvox
 ```
