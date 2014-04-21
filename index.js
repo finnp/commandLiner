@@ -1,44 +1,58 @@
 var util = require('util');
 
-var buildQuery = function(cmd, options, args) {
-  var command = cmd;
+var buildCmd = function(cmd, options, args) {
+  var cmdString = cmd;
 
-  // Options
   if(options) {
-    if(util.isArray(options)) {
-      options.forEach(function(option) {
-        command += ' --' + option;
-      });
-    } else {
-      for(var key in options) {
-        var value = options[key];
-        if(value) {
-          command += ' ';
-          var isShortcut = key.length === 1;
-          command += isShortcut ? '-' : '--';
-          command += key;
-          // How to properly test for stirngs?
-          // this should also allow nubers i think
-          if(util.isString(value) || util.Number(value)) {
-            command += isShortcut ? ' ' : '=';
-            command += value;
-          }
-        }
-      }
-    }
+    cmdString += buildOptions(options);
   }
 
   // Arguments
   if(args) {
     if(util.isArray(args)) {
       args.forEach(function(arg) {
-        command += ' ' + arg;
+        cmdString += ' ' + arg;
       });
-    } else {
-      command += ' ' + args;
+    } else if(util.isString(args)) {
+      args = args.replace(/"/g, '\\"').replace(/'/g, "\\'");
+      cmdString += ' "' + args + '"';
     }
   }
-  return command;
+  return cmdString;
 };
 
-module.exports = buildQuery;
+// Otions like: 
+// --verboose
+// --reporter=Test
+// -h 
+var buildOptions = function(options) {
+  var cmdOptions = '';
+  if(util.isArray(options)) {
+    options.forEach(function(option) {
+      cmdOptions += ' --' + option;
+    });
+  } else {
+    for(var key in options) {
+      cmdOptions += buildOption(key, options[key]);
+    }
+  }
+  return cmdOptions;
+};
+
+// Build a single option
+var buildOption = function(key, value) {
+  var option = '';
+  if(value) {
+    option += ' ';
+    var isShortcut = key.length === 1;
+    option += isShortcut ? '-' : '--';
+    option += key;
+    if(util.isString(value) || util.isNumber(value)) {
+      option += isShortcut ? ' ' : '=';
+      option += value;
+    }
+  }
+  return option;
+};
+
+module.exports = buildCmd;

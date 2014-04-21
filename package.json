@@ -1,7 +1,7 @@
 {
-  "name": "buildcmd",
+  "name": "commandliner",
   "version": "0.0.0",
-  "description": "Building standard commands the nice way",
+  "description": "Build standard commands for the use with exec",
   "main": "index.js",
   "scripts": {
     "test": "mocha test.js"
@@ -9,7 +9,9 @@
   "keywords": [
     "command",
     "cmd",
-    "build"
+    "cli",
+    "build",
+    "exec"
   ],
   "author": "Finn Pauls",
   "license": "MIT"
