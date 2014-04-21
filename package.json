@@ -1,0 +1,16 @@
+{
+  "name": "buildcmd",
+  "version": "0.0.0",
+  "description": "Building standard commands the nice way",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "keywords": [
+    "command",
+    "cmd",
+    "build"
+  ],
+  "author": "Finn Pauls",
+  "license": "MIT"
+}
