@@ -1,19 +1,19 @@
 var assert = require('assert');
-var buildQuery = require('./index.js');
+var Commandliner = require('./index.js');
 
-describe('buildCmd', function() {
+describe('Commandliner', function() {
   it('should build a query properly', function() {
     var options = {
       'interactive': true,
       'v': 'Zarvox'
     };
-    var command = buildQuery('say', options);
-    assert.equal(command, 'say --interactive -v Zarvox');
+    var say = new Commandliner('say', options);
+    assert.equal(say.toString(), 'say --interactive -v Zarvox');
   });
 
   it('should append arguments to the end', function() {
-    var command = buildQuery('jshint', ['verboose'], ['index.js', 'test.js']);
-    assert.equal(command, 'jshint --verboose index.js test.js');
+    var jshint = new Commandliner('jshint', ['verboose'], ['index.js', 'test.js']);
+    assert.equal(jshint + '', 'jshint --verboose index.js test.js');
   });
 
   it('should accept strings and wrap them nicely', function() {
@@ -21,7 +21,18 @@ describe('buildCmd', function() {
       'interactive': true,
       'v': 'Zarvox'
     };
-    var command = buildQuery('say', options, 'Well, "helloo"Bye');
-    assert.equal(command, 'say --interactive -v Zarvox "Well, \\"helloo\\"Bye"');
+    var say = new Commandliner('say', options, 'Well, "helloo"Bye');
+    assert.equal(say.toString(), 'say --interactive -v Zarvox "Well, \\"helloo\\"Bye"');
+  });
+
+  describe('build', function() {
+    it('should build a query', function() {
+      var options = {
+        'interactive': true,
+        'v': 'Zarvox'
+      };
+      var sayString = Commandliner.build('say', options);
+      assert.equal(sayString, 'say --interactive -v Zarvox');
+    });
   });
 });
