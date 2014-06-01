@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "ur": "https://github.com/finnp/commandLiner"
+    "url": "http://github.com/finnp/commandLiner.git"
   },
   "keywords": [
     "command",
