@@ -18,5 +18,8 @@
     "exec"
   ],
   "author": "Finn Pauls",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "typechecker": "^2.0.8"
+  }
 }
