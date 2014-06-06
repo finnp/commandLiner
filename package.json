@@ -1,6 +1,6 @@
 {
   "name": "commandliner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Build standard commands for the use with exec",
   "main": "index.js",
   "scripts": {
