@@ -1,5 +1,7 @@
 # commandLiner
 
+[![Build Status](https://travis-ci.org/finnp/commandLiner.svg?branch=master)](https://travis-ci.org/finnp/commandLiner)
+
 This is not another command option parser. It's the opposite. A command option builder for the use with exec.
 
 ## Example
