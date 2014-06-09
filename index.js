@@ -1,5 +1,5 @@
-var build = require(__dirname + '/lib/build.js');
 var t = require('typechecker');
+var quote = require('shell-quote').quote
 
 function Commandliner(/* program, [command, ]options, args */) {
   this.program = arguments[0] || '' ;
@@ -14,10 +14,55 @@ function Commandliner(/* program, [command, ]options, args */) {
   }
 }  
 
+Commandliner.buildOption = function (key, value) {
+  var option = [];
+  if(value) {
+    var isShortcut = key.length === 1;
+    option[0] = isShortcut ? '-' : '--';
+    option[0] += key;
+    
+    if(t.isString(value) || t.isNumber(value)) {
+      if(!isShortcut) {
+        // e.g. --interactive=yes
+        option[0] += '=' + value;
+      } else {
+        // e.g. -i a
+        option[1] = value;
+      }
+    }
+  }
+  return option;
+};
 
-Commandliner.build = build.build;
-Commandliner.buildOptions = build.buildOptions;
-Commandliner.buildOption = build.buildOption;
+Commandliner.buildOptions = function (options) {
+  var cmdOptions = [];
+  if(t.isArray(options)) {
+    options.forEach(function(option) {
+      cmdOptions.push('--' + option);
+    });
+  } else {
+    for(var key in options) {
+      cmdOptions = cmdOptions.concat(Commandliner.buildOption(key, options[key]));
+    }
+  }
+  return cmdOptions;
+};
+
+Commandliner.build = function (args) {
+  var cmd = [];
+  args.forEach(function (argument, index) {
+    if(t.isPlainObject(argument)) {
+      cmd = cmd.concat(Commandliner.buildOptions(argument));
+    } else if(t.isArray(argument)) {
+      cmd = cmd.concat(argument);
+    } else {
+      cmd.push(argument);
+    }
+  });
+  
+  cmd = quote(cmd);
+  return cmd;
+};
 
 Commandliner.prototype.toString = function() {
   var fullCommand = [];
