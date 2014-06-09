@@ -25,8 +25,8 @@ describe('Commandliner', function() {
     });
     
     it('should append arguments to the end', function() {
-      var jshint = new Commandliner('jshint', {'verboose': true}, ['index.js', 'test.js']);
-      assert.equal(jshint + '', 'jshint --verboose index.js test.js');
+      var jshint = new Commandliner('jshint', {'verboose': true, 'reporter': 'checkstyle'}, ['index.js', 'test.js']);
+      assert.equal(jshint + '', 'jshint --verboose --reporter=checkstyle index.js test.js');
     });
     
     it('should accept strings and wrap them nicely', function() {
