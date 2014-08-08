@@ -1,6 +1,7 @@
 # commandLiner
-
-[![Build Status](https://travis-ci.org/finnp/commandLiner.svg?branch=master)](https://travis-ci.org/finnp/commandLiner)
+Max / Linux | Windows
+--- | ---
+[![Build Status](https://travis-ci.org/finnp/commandLiner.svg?branch=master)](https://travis-ci.org/finnp/commandLiner) | [![Windows Build status](http://img.shields.io/appveyor/ci/finnp/commandLiner.svg)](https://ci.appveyor.com/project/finnp/commandLiner/branch/master)
 
 This is not another command option parser. It's the opposite. A command option builder for the use with exec. It will use
 [shell-quote](https://github.com/substack/node-shell-quote) by substack to escape the options. 
